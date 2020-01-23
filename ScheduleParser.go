@@ -7,7 +7,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parse(schedule io.ReadCloser) []train {
+func parseTrainSchedules(schedule io.ReadCloser) []train {
 	var trainSlice []train
 	z := html.NewTokenizer(schedule)
 
@@ -39,7 +39,7 @@ func parse(schedule io.ReadCloser) []train {
 					if strings.Contains(z.Token().String(), "<span") {
 						tokenType := z.Next()
 						if tokenType == html.TextToken {
-							train := NewTrain(scheduledTime, z.Token().Data)
+							train := newTrain(strings.TrimSpace(scheduledTime), strings.TrimSpace(z.Token().Data))
 							//log.Println("Found: ", *train)
 							trainSlice = append(trainSlice, *train)
 							break
