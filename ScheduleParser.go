@@ -39,7 +39,8 @@ func parseTrainSchedules(schedule io.ReadCloser) []train {
 					if strings.Contains(z.Token().String(), "<span") {
 						tokenType := z.Next()
 						if tokenType == html.TextToken {
-							train := newTrain(strings.TrimSpace(scheduledTime), strings.TrimSpace(z.Token().Data))
+							destination := strings.Replace(z.Token().Data, "BARCELONA", "BCN", -1)
+							train := newTrain(strings.TrimSpace(scheduledTime), strings.TrimSpace(destination[:13]))
 							//log.Println("Found: ", *train)
 							trainSlice = append(trainSlice, *train)
 							break
