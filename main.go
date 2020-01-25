@@ -1,32 +1,29 @@
 package main
 
 import (
+	"net/http"
+	"strconv"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-func main() {
-	// const from = "79100" //granollers centre
-	// const to = "71802"   //passeig de gràcia
+// "79100" -> granollers centre
+// "71802" -> passeig de gràcia
+// http://localhost:8080/schedules/79100/71802
 
-	// http://localhost:8080/schedules/79100/71802
+func main() {
 	r := gin.Default()
+	r.Use(cors.Default())
 	r.GET("/schedules/:from/:to", func(c *gin.Context) {
 		from := c.Param("from")
 		to := c.Param("to")
+		limit, _ := strconv.Atoi(c.Query("limit"))
 
 		schedule := getNewTrainSchedule(from, to)
-		trainSchedules := parseTrainSchedules(schedule)
-
-		// for _, schedule := range trainSchedules {
-		//  log.Printf("Train destination to %v leaves at %v", schedule.Destination, schedule.Schedule)
-		// }
-		c.JSON(200, trainSchedules)
+		trainSchedules := parseTrainSchedules(schedule, limit)
+		c.JSON(http.StatusOK, trainSchedules)
 	})
 
-	//Allow all origins
-	config := cors.DefaultConfig()
-	config.AllowAllOrigins = true
-	r.Use(cors.New(config))
-	r.Run()
+	r.Run(":8181")
 }
