@@ -1,0 +1,18 @@
+#BARCELONA
+aeroport -> 72400
+passeig de gràcia -> 71802
+sants -> 71801
+el clot -> 79009
+plaça catalunya -> 78805
+
+#GRANOLLERS
+granollers centre -> 79100
+granollers canovelles -> 77006
+les franqueses -> 79109
+la garriga -> 77102
+
+#OTHERS
+sant celoni -> 79104
+vic -> 77109
+girona -> 79300
+puigcerdà -> 77309
